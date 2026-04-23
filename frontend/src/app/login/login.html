@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form (ngSubmit)="enviarDatos()" method="custom-form">
+        <label for="name">Name</label>
+        <input type="text" name="name" id="name" [(ngModel)]="usuario.name" required>
+        <br>
+        <label for="gmail">Gmail</label>
+        <input type="email" name="gmail" id="gmail" [(ngModel)]="usuario.gmail" required>
+        <br>
+        <label for="tel">tel</label>
+        <input type="number" name="tel" id="tel" [(ngModel)]="usuario.tel" required>
+        <br>
+        <button type="submit">register</button>
+        <button type="button" routerLink="/usuarios">Cancel</button>
+    </form>
+</body>
+</html>

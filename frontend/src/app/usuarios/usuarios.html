@@ -1,0 +1,28 @@
+<div class="container">
+  <h1>Lista de Usuarios</h1>
+
+  <table class="tabla-usuarios">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Correo Electrónico</th>
+        <th>Teléfono</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (u of listaUsuarios(); track u.id) {
+        <tr>
+          <td>{{ u.id }}</td>
+          <td>{{ u.name }}</td>
+          <td>{{ u.gmail }}</td>
+          <td>{{ u.tel }}</td>
+        </tr>
+      }
+    </tbody>
+  </table>
+
+  <div>
+    <button routerLink="/login" class="btn-nuevo">Registrar Nuevo Usuario</button>
+  </div>
+</div>

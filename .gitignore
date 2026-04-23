@@ -1,0 +1,9 @@
+# Angular
+**/node_modules/
+**/dist/
+.angular/
+
+# Laravel
+**/vendor/
+**/.env
+**/storage/*.key
