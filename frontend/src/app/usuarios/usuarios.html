@@ -1,28 +1,110 @@
-<div class="container">
-  <h1>Lista de Usuarios</h1>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
-  <table class="tabla-usuarios">
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Nombre</th>
-        <th>Correo Electrónico</th>
-        <th>Teléfono</th>
-      </tr>
-    </thead>
-    <tbody>
-      @for (u of listaUsuarios(); track u.id) {
-        <tr>
-          <td>{{ u.id }}</td>
-          <td>{{ u.name }}</td>
-          <td>{{ u.gmail }}</td>
-          <td>{{ u.tel }}</td>
-        </tr>
-      }
-    </tbody>
-  </table>
+<div class="container mt-4">
+  <div class="card border-0 shadow-sm">
+    <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center py-3">
+      <h5 class="mb-0"><i class="bi bi-people-fill me-2"></i> Usuarios</h5>
+      <button routerLink="/login" class="btn btn-light btn-sm fw-bold"> + NUEVO</button>
+    </div>
 
-  <div>
-    <button routerLink="/login" class="btn-nuevo">Registrar Nuevo Usuario</button>
+    <div class="card-body">
+      <div class="row g-2 mb-3">
+        <div class="col-md-3">
+          <div class="input-group input-group-sm">
+            <input type="number" #txtId class="form-control" placeholder="ID..." (keyup.enter)="buscarPorId(txtId.value)">
+            <button class="btn btn-primary" (click)="buscarPorId(txtId.value)"><i class="bi bi-search"></i></button>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="input-group input-group-sm">
+            <input type="text" #txtEmail class="form-control" placeholder="Buscar por correo..." (keyup.enter)="buscarEmail(txtEmail.value)">
+            <button class="btn btn-info text-white" (click)="buscarEmail(txtEmail.value)">Filtrar</button>
+            <button class="btn btn-secondary" (click)="txtId.value=''; txtEmail.value=''; cargarUsuarios()"><i class="bi bi-arrow-clockwise"></i></button>
+          </div>
+        </div>
+      </div>
+
+      <table class="table table-sm table-hover border-top">
+        <thead>
+          <tr class="table-light">
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Email</th>
+            <th class="text-center">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (u of listaUsuarios(); track u.id) {
+            <tr>
+              <td><small class="text-muted">#</small>{{ u.id }}</td>
+              <td>{{ u.name }}</td>
+              <td>{{ u.gmail }}</td>
+              <td class="text-center">
+                <button class="btn btn-link btn-sm text-primary p-0 me-2" (click)="abrirModal(u)"><i class="bi bi-pencil-square"></i></button>
+                <button class="btn btn-link btn-sm text-danger p-0" (click)="eliminarUsuario(u.id)"><i class="bi bi-trash"></i></button>
+              </td>
+            </tr>
+          } @empty {
+            <tr><td colspan="4" class="text-center py-4 text-muted">Sin resultados</td></tr>
+          }
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>
+
+@if (mostrarModal()) {
+  <div (click)="cerrarModal()" style="
+    position: fixed; 
+    top: 0; left: 0; 
+    width: 100vw; height: 100vh; 
+    background: rgba(0,0,0,0.7); 
+    z-index: 1040; 
+    backdrop-filter: blur(4px);">
+  </div>
+
+  <div style="
+    position: fixed; 
+    top: 50%; left: 50%; 
+    transform: translate(-50%, -50%); 
+    z-index: 1050; 
+    width: 90%; max-width: 400px;
+    background: white; 
+    border-radius: 16px; 
+    padding: 25px; 
+    box-shadow: 0 20px 25px -5px rgba(0,0,0,0.2);">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <div>
+        <h4 style="margin:0; font-weight: bold; color: #1a202c;">Editar Perfil</h4>
+        <small class="text-primary fw-bold">ID USUARIO: #{{ usuarioSeleccionado().id }}</small>
+      </div>
+      <button type="button" class="btn-close" (click)="cerrarModal()"></button>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label small fw-bold text-muted">Nombre completo</label>
+      <input type="text" class="form-control shadow-sm" [(ngModel)]="usuarioSeleccionado().name" style="border-radius: 8px;">
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label small fw-bold text-muted">Correo electrónico</label>
+      <input type="email" class="form-control shadow-sm" [(ngModel)]="usuarioSeleccionado().gmail" style="border-radius: 8px;">
+    </div>
+
+    <div class="mb-4">
+      <label class="form-label small fw-bold text-muted">Teléfono</label>
+      <input type="text" class="form-control shadow-sm" [(ngModel)]="usuarioSeleccionado().tel" style="border-radius: 8px;">
+    </div>
+
+    <div class="d-grid gap-2">
+      <button class="btn btn-primary fw-bold py-2 shadow-sm" (click)="guardarCambios()" style="border-radius: 10px;">
+        Actualizar Datos
+      </button>
+      <button class="btn btn-light btn-sm text-muted" (click)="cerrarModal()" style="border-radius: 10px;">
+        Cancelar
+      </button>
+    </div>
+  </div>
+}

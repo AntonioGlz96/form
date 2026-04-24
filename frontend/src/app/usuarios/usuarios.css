@@ -1,0 +1,40 @@
+/* Fondo oscuro que bloquea la vista de atrás */
+.modal-backdrop-custom {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.6); /* Más oscuro para que resalte el modal */
+    z-index: 1040;
+    backdrop-filter: blur(3px); /* Agrega un efecto de desenfoque para mejorar la legibilidad del modal */
+}
+
+/* Caja del modal */
+.modal-custom {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1050;
+    width: 90%;
+    max-width: 450px; /* Tamaño máximo para pantallas grandes */
+}
+
+/* El contenido: BLANCO y con sombra */
+.modal-content-custom {
+    background-color: white !important; /* Fondo blanco para el contenido del modal */
+    border-radius: 15px;
+    padding: 30px; /* Más espacio interno */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    border: none;
+}
+
+/* Estilo para los inputs */
+.form-control-custom {
+    background-color: #f8f9fa;
+    border: 1px solid #ced4da;
+    border-radius: 8px;
+    padding: 12px;
+    margin-bottom: 15px;
+}
