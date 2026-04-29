@@ -53,7 +53,56 @@
     </div>
   </div>
 </div>
+///////////////////////////////////////////////////////////////////////////////////
+<div class="container mt-4">
+  <div class="card border-0 shadow-sm">
+    <div class="card-header bg-dark text-white py-3">
+      <h5 class="mb-0">
+        <i class="bi bi-diagram-3-fill me-2"></i>
+        Modelos y Relaciones
+      </h5>
+    </div>
 
+    <div class="card-body">
+
+      <table class="table table-sm table-hover border-top">
+        <thead>
+          <tr class="table-light">
+            <th>ID Modelo</th>
+            <th>Colores</th>
+            <th>Tallas</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          @for (m of modelosAgrupados(); track m.idmodelo) {
+            <tr>
+              <td>#{{ m.idmodelo }}</td>
+              <td>
+                <span class="badge bg-primary me-1" *ngFor="let c of m.colores">
+                  {{ c }}
+                </span>
+              </td>
+              <td>
+                <span class="badge bg-secondary me-1" *ngFor="let t of m.tallas">
+                  {{ t }}
+                </span>
+              </td>
+            </tr>
+          } @empty {
+            <tr>
+              <td colspan="3" class="text-center text-muted py-4">
+                Sin datos
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+
+    </div>
+  </div>
+</div>
+///////////////////////////////////////////////////////////////////////////////////
 @if (mostrarModal()) {
   <div (click)="cerrarModal()" style="
     position: fixed; 
