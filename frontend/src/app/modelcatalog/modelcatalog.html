@@ -1,0 +1,61 @@
+<div class="container">
+
+  <h5 class="mb-4 fw-bold">Asignar categorías a modelo</h5>
+
+  <!-- MODELO -->
+  <div class="mb-3">
+    <label class="fw-bold">Modelo</label>
+    <select class="form-control" [(ngModel)]="selectedModel">
+      <option [ngValue]="null">Selecciona un modelo</option>
+      <option *ngFor="let m of models" [value]="m.id">
+        {{ m.title }}
+      </option>
+    </select>
+  </div>
+
+<div class="mb-3">
+  <label class="fw-bold">Colores</label>
+
+  <div *ngIf="colors.length === 0" class="text-muted">
+    No hay colores disponibles
+  </div>
+
+  <div *ngFor="let c of colors" class="form-check">
+    <input
+        <input
+        class="form-check-input"
+        type="checkbox"
+        [disabled]="selectedModel && existeRelacion(selectedModel, c.id)"
+        (change)="toggleCategory(c.id)"
+        />
+    <label class="form-check-label">
+      {{ c.title }}
+    </label>
+  </div>
+</div>
+
+<div class="mb-3">
+  <label class="fw-bold">Tallas</label>
+
+  <div *ngIf="sizes.length === 0" class="text-muted">
+    No hay tallas disponibles
+  </div>
+
+  <div *ngFor="let s of sizes" class="form-check">
+    <input
+        class="form-check-input"
+        type="checkbox"
+        [disabled]="selectedModel && existeRelacion(selectedModel, s.id)"
+        (change)="toggleCategory(s.id)"
+    />
+    <label class="form-check-label">
+      {{ s.title }}
+    </label>
+  </div>
+</div>
+
+<button class="btn btn-success" (click)="submit()">
+  Guardar relaciones
+</button>
+
+</div>

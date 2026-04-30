@@ -1,0 +1,17 @@
+<button class="btn btn-primary" (click)="openRelationModal()">
+  Asignar categorías
+</button>
+
+<app-modal
+  #appRelationForm
+  [title]="'Asignar categorías a modelo'"
+  [showFooter]="false"
+>
+  <app-modelcatalog
+    *ngIf="appRelationForm.isModalOpen"
+    [models]="tableDataModels"
+    [colors]="tableDataColors"
+    [sizes]="tableDataSizes"
+    [relacionesExistentes]="relacionesRaw"
+  ></app-modelcatalog>
+</app-modal>
