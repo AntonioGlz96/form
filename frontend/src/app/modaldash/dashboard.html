@@ -1,0 +1,21 @@
+<td class="text-center">
+  <button class="btn btn-sm btn-primary"
+          (click)="openRelationModal(row)">
+    <i class="bi bi-link-45deg"></i>
+  </button>
+</td>
+
+
+<app-modal
+  #appRelationForm
+  [title]="'Asignar categorías'"
+  [showFooter]="false"
+>
+  <app-modelcatalog
+    *ngIf="appRelationForm?.isModalOpen"
+    [model]="selectedModelForRelation"
+    [colors]="tableDataColors"
+    [sizes]="tableDataSizes"
+    [relacionesExistentes]="relacionesDelModelo"
+  ></app-modelcatalog>
+</app-modal>
