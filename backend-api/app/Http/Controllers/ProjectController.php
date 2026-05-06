@@ -8,49 +8,61 @@ use App\Models\ProjectCatalog;
 
 class ProjectController extends Controller
 {
-    public function storeOrUpdate(Request $request)
-    {
-        $project = Project::updateOrCreate(
-            ['id' => $request->id],
-            $request->all()
-        );
+    public function store(Request $request)
+{
+    $validated = $request->validate([
+        'no_project' => 'required|string',
+        'name_project' => 'required|string',
 
-        // 🔥 LIMPIAR RELACIONES ANTERIORES
-        ProjectCatalog::where('project_id', $project->id)->delete();
+        'areas' => 'array',
+        'areas.*' => 'integer',
 
-        // AREAS
-        foreach ($request->areas ?? [] as $areaId) {
-            ProjectCatalog::create([
-                'project_id' => $project->id,
-                'catalog_id' => $areaId,
-                'garment_type' => null
-            ]);
-        }
+        'uniforms' => 'array',
+        'uniforms.*' => 'integer',
 
-        // UNIFORMS
-        foreach ($request->uniforms ?? [] as $uniformId) {
-            ProjectCatalog::create([
-                'project_id' => $project->id,
-                'catalog_id' => $uniformId,
-                'garment_type' => null
-            ]);
-        }
+        // NUEVO: validación para modelos por prenda
+        'models_by_garment' => 'nullable|array',
+        'models_by_garment.*' => 'array',
+        'models_by_garment.*.*' => 'integer|exists:catalogs,id',
+    ]);
 
-        // 🔥 MODELOS POR PRENDA
-        if ($request->has('models_by_garment')) {
-            foreach ($request->models_by_garment as $garment => $models) {
-                foreach ($models as $modelId) {
-                    ProjectCatalog::create([
-                        'project_id' => $project->id,
-                        'catalog_id' => $modelId,
-                        'garment_type' => $garment
-                    ]);
-                }
+    $project = Project::create([
+        'no_project' => $request->no_project,
+        'name_project' => $request->name_project,
+    ]);
+
+    // EXISTENTE
+    foreach ($request->areas ?? [] as $area) {
+        DB::table('projects_catalogs')->insert([
+            'project_id' => $project->id,
+            'catalog_id' => $area,
+        ]);
+    }
+
+    // EXISTENTE
+    foreach ($request->uniforms ?? [] as $uniform) {
+        DB::table('projects_catalogs')->insert([
+            'project_id' => $project->id,
+            'catalog_id' => $uniform,
+        ]);
+    }
+
+    // NUEVO: insertar modelos con tipo de prenda
+    if ($request->has('models_by_garment')) {
+
+        foreach ($request->models_by_garment as $clothe => $models) {
+
+            foreach ($models as $model) {
+
+                DB::table('projects_catalogs')->insert([
+                    'project_id' => $project->id,
+                    'catalog_id' => $model,
+                    'clothes' => strtoupper($clothe), // NUEVO campo
+                ]);
             }
         }
-
-        return response()->json([
-            'message' => 'Proyecto guardado correctamente'
-        ], 200);
     }
+
+    return response()->json(['success' => true]);
+}
 }

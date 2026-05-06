@@ -1,10 +1,18 @@
+<hr class="my-4" />
+
 <div class="row">
+  <div class="col-12 mb-2">
+    <label class="form-label fw-semibold">Modelos por prenda</label>
+  </div>
 
   <!-- PANTALÓN -->
   <div class="col-md-6 mb-3">
     <label>Pantalón</label>
-    <input type="checkbox" [(ngModel)]="project.check_pants" name="check_pants"/>
 
+    <!-- YA EXISTÍA -->
+    <input type="checkbox" [(ngModel)]="project.check_pants" name="check_pants" />
+
+    <!-- selector de modelos -->
     <ng-select
       [items]="catalogs.models.data"
       bindLabel="title"
@@ -16,10 +24,11 @@
     </ng-select>
   </div>
 
-  <!-- CAMISOLA -->
+  <!-- CAMISA -->
   <div class="col-md-6 mb-3">
-    <label>Camisola</label>
-    <input type="checkbox" [(ngModel)]="project.check_shirt" name="check_shirt"/>
+    <label>Camisa</label>
+
+    <input type="checkbox" [(ngModel)]="project.check_shirt" name="check_shirt" />
 
     <ng-select
       [items]="catalogs.models.data"
@@ -29,70 +38,6 @@
       name="models_shirt"
       [multiple]="true"
       [disabled]="!project.check_shirt">
-    </ng-select>
-  </div>
-
-  <!-- CHAMARRA -->
-  <div class="col-md-6 mb-3">
-    <label>Chamarra</label>
-    <input type="checkbox" [(ngModel)]="project.check_jacket" name="check_jacket"/>
-
-    <ng-select
-      [items]="catalogs.models.data"
-      bindLabel="title"
-      bindValue="id"
-      [(ngModel)]="projectModels.jacket"
-      name="models_jacket"
-      [multiple]="true"
-      [disabled]="!project.check_jacket">
-    </ng-select>
-  </div>
-
-  <!-- CINTURÓN -->
-  <div class="col-md-6 mb-3">
-    <label>Cinturón</label>
-    <input type="checkbox" [(ngModel)]="project.check_belt" name="check_belt"/>
-
-    <ng-select
-      [items]="catalogs.models.data"
-      bindLabel="title"
-      bindValue="id"
-      [(ngModel)]="projectModels.belt"
-      name="models_belt"
-      [multiple]="true"
-      [disabled]="!project.check_belt">
-    </ng-select>
-  </div>
-
-  <!-- BOTAS -->
-  <div class="col-md-6 mb-3">
-    <label>Botas</label>
-    <input type="checkbox" [(ngModel)]="project.check_boots" name="check_boots"/>
-
-    <ng-select
-      [items]="catalogs.models.data"
-      bindLabel="title"
-      bindValue="id"
-      [(ngModel)]="projectModels.boots"
-      name="models_boots"
-      [multiple]="true"
-      [disabled]="!project.check_boots">
-    </ng-select>
-  </div>
-
-  <!-- GORRA -->
-  <div class="col-md-6 mb-3">
-    <label>Gorra</label>
-    <input type="checkbox" [(ngModel)]="project.check_cap" name="check_cap"/>
-
-    <ng-select
-      [items]="catalogs.models.data"
-      bindLabel="title"
-      bindValue="id"
-      [(ngModel)]="projectModels.cap"
-      name="models_cap"
-      [multiple]="true"
-      [disabled]="!project.check_cap">
     </ng-select>
   </div>
 
