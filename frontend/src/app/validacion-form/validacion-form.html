@@ -1,0 +1,56 @@
+<div class="container-fluid">
+
+  <div class="mb-3">
+    <label class="form-label fw-semibold">
+      Nombre
+    </label>
+
+    <input
+      type="text"
+      class="form-control"
+      [(ngModel)]="title"
+      (ngModelChange)="onTitleChange()"
+      placeholder="Ingrese nombre"
+    />
+
+    <!-- NUEVO -->
+    <small
+      *ngIf="titleExists"
+      class="text-danger fw-semibold d-block mt-1"
+    >
+      {{ existsMessage }}
+    </small>
+
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label fw-semibold">
+      Tipo
+    </label>
+
+    <input
+      type="text"
+      class="form-control"
+      [(ngModel)]="type"
+      disabled
+    />
+  </div>
+
+  <div class="d-flex justify-content-end">
+    <button
+      class="btn btn-success"
+      (click)="submit()"
+      [disabled]="isSaving || titleExists"
+    >
+      <span *ngIf="!isSaving">
+        Guardar
+      </span>
+
+      <span *ngIf="isSaving">
+        <span class="spinner-border spinner-border-sm"></span>
+        Guardando...
+      </span>
+    </button>
+  </div>
+
+</div>

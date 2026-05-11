@@ -1,0 +1,13 @@
+<div *ngFor="let model of modelPants">
+
+  <h6>
+    {{ model.catalog?.title }}
+  </h6>
+
+  <div *ngFor="let size of model.sizes">
+
+    {{ size.catalog?.title }}
+
+  </div>
+
+</div>
